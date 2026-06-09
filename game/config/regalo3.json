@@ -1,0 +1,43 @@
+{
+  "imagenGanadora": 4,
+  "imagenes": [
+    "img1.webp",
+    "img2.png",
+    "img3.png",
+    "img4.png",
+    "img5.png",
+    "img6.png",
+    "img7.png"
+  ],
+  "incorrectos": {
+    "1": {
+      "titulo": "¡No era Lyney!",
+      "descripcion": "Aunque Lyney es muy guapo, el regalo no estaba aquí. ¡Sigue buscando! 🃏"
+    },
+    "2": {
+      "titulo": "¡No era el Vagabundo!",
+      "descripcion": "Wanderer tiene mucho estilo, pero el regalo no estaba escondido aquí. ¡Inténtalo de nuevo! 💨"
+    },
+    "3": {
+      "titulo": "¡Casi! Pero no...",
+      "descripcion": "Estás muy cerca, el regalo se esconde entre los personajes favoritos. ¡No te rindas! ✨"
+    },
+    "5": {
+      "titulo": "¡Esta no era!",
+      "descripcion": "¡Qué cerca estabas! El regalo se esconde junto a tu personaje favorito. ¡Sigue intentando! 🌸"
+    },
+    "6": {
+      "titulo": "¡Nope! Sigue buscando",
+      "descripcion": "El corazón guía hacia el personaje favorito. ¿Cuál será? Tú ya lo sabes... 💫"
+    },
+    "7": {
+      "titulo": "¡No era esta!",
+      "descripcion": "El regalo verdadero lleva el nombre del viento. ¡Ya sabes cuál es! 🍃"
+    }
+  },
+  "ganador": {
+    "titulo": "¡GANASTE! 🎉",
+    "subtitulo": "Ya que Venti es tu personaje favorito ❤️",
+    "descripcion": "¡Lo encontraste! Detrás de Venti se esconde tu regalo especial. Igual que el viento libre, este amor no tiene límites. ¡Feliz cumpleaños, mi vida! ❤️🍃"
+  }
+}
