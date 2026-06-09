@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Feliz Cumpleaños ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Fondo de partículas global -->
+  <div id="particles-container"></div>
+
+  <!-- Overlay de transición entre pantallas -->
+  <div id="transition-overlay"></div>
+
+  <!-- Audio -->
+  <!-- Música de fondo (loop automático) -->
+  <audio id="bgMusic" loop>
+    <source src="assets/musica/William Rosati - Floating Also  NO COPYRIGHT 8-bit Music.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Clic de botones UI -->
+  <audio id="sfxClick">
+    <source src="assets/sonidos/click-3.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Ding de punto/victoria (flappy score) -->
+  <audio id="sfxWin">
+    <source src="assets/sonidos/Ding - Sound Effect (HD).mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Aleteo de Durin (flappy) -->
+  <audio id="sfxFlap">
+    <source src="assets/sonidos/Giant Wing Flapping Sound Effect.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Choque/Game Over (flappy) -->
+  <audio id="sfxHit">
+    <source src="assets/sonidos/Spongebob Fail - Sound Effect HD.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Teclas mientras se escribe la carta -->
+  <audio id="sfxTypewriter" loop>
+    <source src="assets/sonidos/SONIDO DE ESCRIBIR EN EL TECLADO  - PLAY SOUND GAMING.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Magia/confeti (regalo 3 ganador) -->
+  <audio id="sfxFairy">
+    <source src="assets/sonidos/FAIRY DUST  SOUND EFFECT HD (NO COPYRIGHT).mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- "I'm ready" al entrar a la selección de regalos -->
+  <audio id="sfxStart">
+    <source src="assets/sonidos/I'm ready - Sound Effect.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Botón de música flotante -->
+  <button id="musicToggle" class="music-toggle" title="Música">🎵</button>
+
+  <!-- ══════════════════════════════════════
+       PANTALLA 1 — MENÚ PRINCIPAL
+       ══════════════════════════════════════ -->
+  <section id="screen-menu" class="screen active">
+    <div class="menu-stars" id="menuStars"></div>
+
+    <div class="menu-content">
+      <div class="title-wrapper">
+        <div class="title-glow"></div>
+        <h1 class="main-title">FELIZ<br>CUMPLEAÑOS<br>MI VIDA ❤️</h1>
+      </div>
+
+      <p class="subtitle blink-text">¿Quieres ver tu regalo?</p>
+
+      <button class="pixel-btn btn-primary" id="btnStart">
+        ▶ &nbsp;EMPEZAR
+      </button>
+    </div>
+
+    <div class="floating-hearts" id="floatingHearts"></div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       PANTALLA 2 — SELECCIÓN DE REGALOS
+       ══════════════════════════════════════ -->
+  <section id="screen-gifts" class="screen">
+    <div class="gifts-content">
+      <h2 class="section-title">ELIGE TU REGALO</h2>
+
+      <div class="gifts-grid">
+
+        <div class="gift-card" id="gift1" onclick="openGift(1)" role="button" tabindex="0">
+          <div class="gift-glow-ring"></div>
+          <div class="gift-emoji">📩</div>
+          <div class="gift-label">REGALO 1</div>
+          <div class="gift-sublabel">CARTA</div>
+        </div>
+
+        <div class="gift-card" id="gift2" onclick="openGift(2)" role="button" tabindex="0">
+          <div class="gift-glow-ring"></div>
+          <div class="gift-emoji">🎮</div>
+          <div class="gift-label">REGALO 2</div>
+          <div class="gift-sublabel">MINI JUEGO</div>
+        </div>
+
+        <div class="gift-card" id="gift3" onclick="openGift(3)" role="button" tabindex="0">
+          <div class="gift-glow-ring"></div>
+          <div class="gift-emoji">🎁</div>
+          <div class="gift-label">REGALO 3</div>
+          <div class="gift-sublabel">ENCUENTRA</div>
+        </div>
+
+      </div>
+
+      <button class="pixel-btn btn-back" onclick="goToScreen('menu')">
+        ⬅ &nbsp;VOLVER AL MENÚ
+      </button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       PANTALLA 3 — CARTA INTERACTIVA
+       ══════════════════════════════════════ -->
+  <section id="screen-carta" class="screen">
+    <div class="carta-content">
+      <h2 class="section-title">REGALO 1 — CARTA</h2>
+
+      <!-- Sobre cerrado -->
+      <div id="envelope-wrapper" class="envelope-wrapper">
+        <div class="envelope" id="envelope" onclick="openEnvelope()" role="button" tabindex="0">
+          <div class="env-flap" id="envFlap"></div>
+          <div class="env-body">
+            <div class="env-lines">
+              <div class="env-line"></div>
+              <div class="env-line short"></div>
+            </div>
+            <div class="env-seal">❤️</div>
+          </div>
+        </div>
+        <p class="hint-text blink-text">Pulsa la carta</p>
+      </div>
+
+      <!-- Carta desplegada -->
+      <div id="letter-wrapper" class="letter-wrapper hidden">
+        <div class="letter-paper">
+          <div class="letter-deco top-deco">✨ ❤️ ✨</div>
+          <div id="letter-text" class="letter-text"></div>
+          <div class="letter-deco bot-deco">❤️</div>
+        </div>
+      </div>
+
+      <div class="carta-footer">
+        <button class="pixel-btn btn-back" onclick="resetCarta(); goToScreen('gifts')">
+          ⬅ &nbsp;VOLVER A REGALOS
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       PANTALLA 4 — FLAPPY DURIN
+       ══════════════════════════════════════ -->
+  <section id="screen-flappy" class="screen">
+    <div class="flappy-content">
+      <div class="flappy-hud">
+        <span class="hud-text" id="flappyScore">PUNTOS: 0</span>
+        <span class="hud-text" id="flappyRecord">RÉCORD: 0</span>
+      </div>
+
+      <div class="canvas-wrap" id="canvasWrap">
+        <canvas id="flappyCanvas"></canvas>
+
+        <!-- Pantalla de inicio -->
+        <div id="flappyStart" class="flappy-overlay">
+          <div class="overlay-inner">
+            <h2 class="overlay-title">FLAPPY DURIN</h2>
+            <p class="overlay-sub">Ayuda a Durin a volar</p>
+            <p class="blink-text overlay-hint">CLIC / ESPACIO / TAP</p>
+          </div>
+        </div>
+
+        <!-- Pantalla de Game Over -->
+        <div id="flappyGameOver" class="flappy-overlay hidden">
+          <div class="overlay-inner">
+            <h2 class="overlay-title">DURIN TE AMA ❤️</h2>
+            <p class="overlay-sub">PUNTUACIÓN: <span id="finalScore">0</span></p>
+            <p class="overlay-sub">RÉCORD: <span id="finalRecord">0</span></p>
+            <button class="pixel-btn btn-primary small-btn" onclick="restartFlappy()">
+              🔄 &nbsp;INTENTAR NUEVAMENTE
+            </button>
+            <button class="pixel-btn btn-back small-btn" onclick="stopFlappy(); goToScreen('gifts')">
+              ⬅ &nbsp;VOLVER A REGALOS
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       PANTALLA 5 — REGALO 3
+       ══════════════════════════════════════ -->
+  <section id="screen-regalo3" class="screen">
+    <div class="r3-content">
+      <h2 class="section-title">REGALO 3</h2>
+      <p class="r3-instruction">
+        Una de estas imágenes contiene tu verdadero regalo.<br>
+        ¿Podrás encontrarla?
+      </p>
+
+      <div class="options-grid" id="optionsGrid"></div>
+
+      <button class="pixel-btn btn-back" onclick="resetRegalo3(); goToScreen('gifts')">
+        ⬅ &nbsp;VOLVER A REGALOS
+      </button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       MODAL — RESPUESTA INCORRECTA
+       ══════════════════════════════════════ -->
+  <div id="modal-wrong" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-icon">💔</div>
+      <h3 class="modal-title" id="wrongTitle">No era el correcto pero...</h3>
+      <p class="modal-desc" id="wrongDesc"></p>
+      <div class="modal-actions">
+        <button class="pixel-btn btn-primary small-btn" onclick="closeModal('wrong')">
+          ▶ &nbsp;SEGUIR INTENTANDO
+        </button>
+        <button class="pixel-btn btn-back small-btn" onclick="closeModal('wrong'); resetRegalo3(); goToScreen('gifts')">
+          ⬅ &nbsp;VOLVER A REGALOS
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       MODAL — GANADOR
+       ══════════════════════════════════════ -->
+  <div id="modal-win" class="modal-overlay hidden">
+    <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+    <div class="modal-box win-box">
+      <div class="modal-icon spin-icon">🎉</div>
+      <h3 class="modal-title win-title" id="winTitle">¡GANASTE!</h3>
+      <p class="modal-subtitle" id="winSubtitle"></p>
+      <p class="modal-desc" id="winDesc"></p>
+      <div class="modal-actions">
+        <button class="pixel-btn btn-primary small-btn" onclick="closeModal('win'); resetRegalo3()">
+          🔄 &nbsp;REPETIR JUEGO
+        </button>
+        <button class="pixel-btn btn-back small-btn" onclick="closeModal('win'); resetRegalo3(); goToScreen('gifts')">
+          ⬅ &nbsp;VOLVER A REGALOS
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/carta.js"></script>
+  <script src="js/flappy.js"></script>
+  <script src="js/regalo3.js"></script>
+</body>
+</html>
