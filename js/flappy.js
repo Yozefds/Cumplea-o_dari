@@ -63,19 +63,42 @@ const Flappy = (() => {
     // Mostrar pantalla de inicio
     setOverlay('start');
 
+    // Reajustar canvas al girar/redimensionar
+    window.removeEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize);
+
     // Bucle de animación idle (pájaro flotando)
     if (rafId) cancelAnimationFrame(rafId);
     gameState = 'idle';
     rafId = requestAnimationFrame(idleLoop);
   }
 
+  function handleResize() {
+    const screen = document.getElementById('screen-flappy');
+    if (!screen || !screen.classList.contains('active')) return;
+
+    sizeCanvas();
+    generateStars();
+
+    // Reposicionar pájaro proporcionalmente
+    if (bird) {
+      bird.x = canvas.width  * 0.25;
+      if (gameState === 'idle') bird.y = canvas.height * 0.45;
+    }
+  }
+
   function sizeCanvas() {
-    const wrap = document.getElementById('canvasWrap');
-    const maxW = Math.min(wrap.clientWidth - 4, 400);
-    const maxH = Math.min(window.innerHeight - 120, 600);
+    const wrap   = document.getElementById('canvasWrap');
+    const hudH   = document.querySelector('.flappy-hud')?.offsetHeight || 44;
+    const availH = window.innerHeight - hudH;
+
+    // En landscape el canvas es ancho; en portrait es alto
+    const isLandscape = window.innerWidth > window.innerHeight;
+    const maxW = Math.min(wrap.clientWidth - 2, isLandscape ? 540 : 400);
+    const maxH = Math.min(availH - 4, isLandscape ? 380 : 620);
 
     canvas.width  = maxW;
-    canvas.height = Math.min(maxH, Math.round(maxW * 1.45));
+    canvas.height = Math.min(maxH, Math.round(maxW * (isLandscape ? 0.7 : 1.45)));
   }
 
   function generateStars() {
@@ -427,6 +450,7 @@ const Flappy = (() => {
     gameState = 'idle';
     if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
     document.removeEventListener('keydown', onKey);
+    window.removeEventListener('resize', handleResize);
   }
 
   return { init, restart, stop };
