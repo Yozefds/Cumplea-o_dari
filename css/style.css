@@ -625,6 +625,7 @@ html, body {
 #screen-flappy {
   background: #0a0a1a;
   padding: 0;
+  overflow: hidden; /* no scroll en el juego */
 }
 
 .flappy-content {
@@ -661,6 +662,11 @@ html, body {
   align-items: center;
   justify-content: center;
   width: 100%;
+  /* touch-action: none le dice al navegador que no intente
+     hacer scroll/zoom en esta área — el JS maneja todo */
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 #flappyCanvas {
